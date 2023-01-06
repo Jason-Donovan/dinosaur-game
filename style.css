@@ -3,6 +3,48 @@ html, body {
   padding: 0;
 }
 
+head {
+  text-align: center;
+}
+
 canvas {
+  -align: middle;
   display: block;
+}
+
+
+h3 {
+  font-family: 'Courier New';
+  font-size: 13px;
+  color: rgb(24, 24, 24);
+}
+
+body {
+  margin: 0;
+  display: flex;
+
+  /* This centers our sketch horizontally. */
+  justify-content: center;
+
+  /* This centers our sketch vertically. */
+  align-items: center;
+}
+
+.button {
+  color: white;
+  padding: 100;
+  text-align: center;
+}
+
+#container {
+  min-height: 100vh; /* mobile viewport bug fix */
+  min-height: -webkit-fill-available;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+ }
+
+#sketch {
+position: relative;
 }

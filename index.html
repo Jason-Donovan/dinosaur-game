@@ -12,10 +12,20 @@
     <script src="libraries/p5.sound.min.js"></script>
   </head>
 
-  <body>
+  <body style="background-color:#dddddd">
     <script src="sketch.js"></script>
     <script src="player.js"></script>
     <script src="bullet.js"></script>
     <script src="enemy.js"></script>
+    <div id="container">
+      <div id="sketch">
+        <div class="button">
+          <button onClick="resetSketch();">restart</button>
+          <h3 id="text">use wasd to move and arrow keys to shoot</h3>
+        </div>
+      </div>
+    </div>
   </body>
+
+  
 </html>
