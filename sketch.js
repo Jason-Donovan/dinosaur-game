@@ -1,20 +1,22 @@
+//player and enemy variables
 let player;
 let score = 0;
 
 var enemies = [];
 var spawn = [40, 560];
 
+// sprites
 let playerFrames = [];
 let playerNumFrames = 6;
 let enemyFrames = [];
 let enemyNumFrames = 6;
-
 let whichFrame = 0;
-
 let bg;
 
+// keystrokes
 let pressedKeys = {};
 
+//loads the images for player and enemy animation
 function preload() {
   for (let i = 1; i < playerNumFrames + 1; i++) {
     let filename = 'Assets/Sprites/Player/' + i + '.png';
@@ -30,6 +32,7 @@ function preload() {
   bg = loadImage('Assets/Background.png');
 }
 
+//makes canvas
 function setup() {
   let canvas = createCanvas(600, 600);
   canvas.parent("sketch");
@@ -42,10 +45,12 @@ function draw() {
   player.update();
   player.draw();
   
+  // spawns enemies
   if((frameCount % 120) === 0) {
     spawnEnemies(floor(random(1,5)));
   }
 
+  //moves enemies
   for(let i = 0; i < enemies.length; i++) {
     enemies[i].move();
     enemies[i].draw();
@@ -53,6 +58,7 @@ function draw() {
     image(enemyFrames[whichFrame], enemies[i].x, enemies[i].y);
   }
 
+  //makes scorebox
   scoreBox(score);
 
   // check whether enemy touches player
@@ -75,6 +81,7 @@ function draw() {
     }
   }
 
+  //animates the player
   imageMode(CENTER);
   image(playerFrames[whichFrame], player.x, player.y);
   if (frameCount % 6 === 0) {
@@ -86,15 +93,16 @@ function draw() {
   
 }
 
+//detects keystrokes
 function keyPressed() {
   player.keyPressed();
   pressedKeys[key] = true;
 }
-
 function keyReleased() {
   delete pressedKeys[key];
 }
 
+//score box
 function scoreBox(score) {
   textAlign(CENTER);
   fill(60);
@@ -107,6 +115,7 @@ function scoreBox(score) {
   text(score, width/2, 27)
 }
 
+//generates spawn coordinates for enemies
 function spawnCoord() {
   return spawn[Math.round(random(0,1))];
 }
@@ -116,6 +125,8 @@ function spawnEnemies (number) {
     enemies.push(new Enemy(spawnCoord(), spawnCoord(), player));
   }
 }
+
+Math.round(math.random())
 
 function resetSketch () {
   loop();
@@ -127,6 +138,8 @@ function resetSketch () {
   enemies.splice(0, enemies.length);
 }
 
+
+// displays the death screen box with score
 function deathScreen() {
   rectMode(CENTER);
   fill(255);
