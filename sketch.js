@@ -46,13 +46,13 @@ function draw() {
   player.draw();
   
   // spawns enemies
-  if((frameCount % 120) === 0) {
+  if((frameCount % 60) === 0) {
     spawnEnemies(floor(random(1,5)));
   }
 
   //moves enemies
   for(let i = 0; i < enemies.length; i++) {
-    enemies[i].move();
+    enemies[i].move(enemies);
     enemies[i].draw();
     imageMode(CENTER);
     image(enemyFrames[whichFrame], enemies[i].x, enemies[i].y);
@@ -116,17 +116,17 @@ function scoreBox(score) {
 }
 
 //generates spawn coordinates for enemies
+/*
 function spawnCoord() {
   return spawn[Math.round(random(0,1))];
 }
+*/
 
 function spawnEnemies (number) {  
   for(let i = 0; i < number; i++) {
-    enemies.push(new Enemy(spawnCoord(), spawnCoord(), player));
+    enemies.push(new Enemy(round(random(0 + 30, width - 30)), 30, player));
   }
 }
-
-Math.round(math.random())
 
 function resetSketch () {
   loop();

@@ -3,25 +3,39 @@ class Enemy {
     this.x = x;
     this.y = y;
     this.player = player;
-    this.speed = 2 + (score/50);
+    this.speed = 1.5 + (score / 75);
   }
 
-  update() {
-    this.rotation = atan2(player.y - this.y, player.x - this.y);
-    this.speed = 2.5;
+  move(enemies) {
+    const avoidanceRadius = 30;
+    const maxSpeed = this.speed;
 
-    this.x += cos(this.rotation) * this.speed;
-    this.y += sin(this.rotation) * this.speed;
+    let avoidanceVector = createVector(0, 0);
+    let totalAvoided = 0;
+
+    for (let i = 0; i < enemies.length; i++) {
+      if (enemies[i] !== this) {
+        const distance = dist(this.x, this.y, enemies[i].x, enemies[i].y);
+        if (distance < avoidanceRadius) {
+          const avoidanceDirection = createVector(this.x - enemies[i].x, this.y - enemies[i].y).normalize();
+          avoidanceVector.add(avoidanceDirection);
+          totalAvoided++;
+        }
+      }
+    }
+
+    if (totalAvoided > 0) {
+      avoidanceVector.div(totalAvoided); // Average the avoidance vector
+      avoidanceVector.normalize();
+    }
+
+    const playerDirection = createVector(this.player.x - this.x, this.player.y - this.y).normalize();
+    const finalDirection = p5.Vector.add(playerDirection, avoidanceVector).normalize();
+
+    this.x += finalDirection.x * maxSpeed;
+    this.y += finalDirection.y * maxSpeed;
   }
 
-  move() {
-    var xDir = player.x-this.x;
-    var yDir = player.y-this.y;
-    var vector = createVector(xDir, yDir).normalize();
-    this.x += vector.x*this.speed;
-    this.y += vector.y*this.speed;
-  }
-  
   draw() {
     noFill();
     noStroke();
