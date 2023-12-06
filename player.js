@@ -5,21 +5,25 @@ class Player {
       
       this.speed = 4;
       this.bullets = [];
+
+      this.lives = 3;
     }
     
+    // movement
     update() {
       let mvmt = createVector(0, 0);
       
-      if(pressedKeys.a) {
+      // OR (||) allows for capitals to be accepted to
+      if(pressedKeys.a || pressedKeys.A) {
         mvmt.x -= 1;
       }
-      if(pressedKeys.d) {
+      if(pressedKeys.d || pressedKeys.D) {
         mvmt.x += 1;
       }
-      if(pressedKeys.w) {
+      if(pressedKeys.w || pressedKeys.W) {
         mvmt.y -= 1;
       }
-      if(pressedKeys.s) {
+      if(pressedKeys.s || pressedKeys.S) {
         mvmt.y += 1;
       }
       
@@ -41,6 +45,7 @@ class Player {
         this.y = height;
       }
 
+      // removes the bullets from the game when they leave the screen
       for (let i = 0; i < this.bullets.length; i++) {
         this.bullets[i].draw();
         this.bullets[i].move();
@@ -50,6 +55,7 @@ class Player {
       }
     }
     
+    // allows players to shoot
     keyPressed() {
       if (key == "ArrowUp") {
         this.bullets.push(new bullet(this.x, this.y, "up"));
@@ -65,6 +71,30 @@ class Player {
       }
     }
 
+    // displays lives in the corner
+    drawLives() {
+      switch(this.lives) {
+        case 3:
+          imageMode(CENTER);
+          image( heart, 15, 15, 28, 28);
+          image( heart, 45, 15, 28, 28);
+          image( heart, 75, 15, 28, 28);
+          break;
+        case 2:
+          imageMode(CENTER);
+          image( heart, 15, 15, 28, 28);
+          image( heart, 45, 15, 28, 28);
+          break;
+        case 1:
+          imageMode(CENTER);
+          image( heart, 15, 15, 28, 28);
+          break;
+        case 0:
+          break;
+      }
+    }
+
+    // draws the player's hitbox
     draw() {
       noFill();
       noStroke();

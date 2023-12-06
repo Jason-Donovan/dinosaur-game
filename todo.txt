@@ -1,7 +1,6 @@
 TODO
 
-1. make enemies spawn from 4 directions (top bottom left right)
-2. add lives (put corner, make lives look like dino head and whena life is lost turn it into a skull)
+2. add lives (put corner, make lives look like dino head and when a life is lost turn it into a skull)
 3. allow for diagonal shooting
 4. allow player to shoot by holding down arow keys
 5. add power ups (freeze, shoot bullets in all directions, and asteroid that kills all dinos)

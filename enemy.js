@@ -3,7 +3,7 @@ class Enemy {
     this.x = x;
     this.y = y;
     this.player = player;
-    this.speed = 1.5 + (score / 75);
+    this.speed = 1.1 + (score / 75);
   }
 
   move(enemies) {

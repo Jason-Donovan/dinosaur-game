@@ -6,12 +6,18 @@ var enemies = [];
 var spawn = [40, 560];
 
 // sprites
+//player
 let playerFrames = [];
 let playerNumFrames = 6;
+
+//enemy
 let enemyFrames = [];
 let enemyNumFrames = 6;
 let whichFrame = 0;
+
+//other
 let bg;
+let heart;
 
 // keystrokes
 let pressedKeys = {};
@@ -30,6 +36,7 @@ function preload() {
   }
 
   bg = loadImage('Assets/Background.png');
+  heart = loadImage('Assets\Sprites\Other\heart.png');
 }
 
 //makes canvas
@@ -40,14 +47,17 @@ function setup() {
 }
 
 function draw() {
+  deathCheck(player);
+
   // background(image('Assets/Background.png', 0, 0));
   image(bg, width/2, height/2);
   player.update();
   player.draw();
+  player.drawLives();
   
   // spawns enemies
   if((frameCount % 60) === 0) {
-    spawnEnemies(floor(random(1,5)));
+    spawnEnemies(floor(random(1,4)));
   }
 
   //moves enemies
@@ -64,8 +74,7 @@ function draw() {
   // check whether enemy touches player
   for (let i = 0; i < enemies.length; i++) {
     if (dist(player.x, player.y, enemies[i].x, enemies[i].y) < 30) {
-      noLoop();
-      deathScreen();
+      player.lives--;
     }
   }
 
@@ -115,16 +124,25 @@ function scoreBox(score) {
   text(score, width/2, 27)
 }
 
-//generates spawn coordinates for enemies
-/*
-function spawnCoord() {
-  return spawn[Math.round(random(0,1))];
-}
-*/
-
+// spawns enemies
 function spawnEnemies (number) {  
   for(let i = 0; i < number; i++) {
-    enemies.push(new Enemy(round(random(0 + 30, width - 30)), 30, player));
+    // chooses randomly from 4 preset coordinates 
+    spawn = round(random(1,4));
+    switch(spawn) {
+      case 1: //top
+        enemies.push(new Enemy(width/2, 30, player));
+        break;
+      case 2: //bottom
+        enemies.push(new Enemy(width/2, height -30, player));
+        break;
+      case 3: //left
+        enemies.push(new Enemy(30, height/2, player));
+        break;
+      case 4: //right
+        enemies.push(new Enemy(width - 30, height/2, player));
+        break;
+    }
   }
 }
 
@@ -155,5 +173,12 @@ function deathScreen() {
     text("better, but a blind person could still beat you" , width/2, 170);
   } else {
     text("not bad", width/2, 170);
+  }
+}
+
+function deathCheck(player) {
+  if (player.lives == 0) {
+    noLoop();
+    deathScreen();
   }
 }
